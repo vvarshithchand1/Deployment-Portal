@@ -11,7 +11,7 @@ GitHub REST API on your behalf.
 
 No database is required — all configuration is stored in a local JSON file.
 
----
+----
 
 ## Run Pipeline
 
