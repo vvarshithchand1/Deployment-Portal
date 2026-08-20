@@ -1,0 +1,55 @@
+# Docker
+# Build a Docker image and publish it as a pipeline artifact
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- master
+
+resources:
+- repo: self
+
+parameters:
+- name: startPipeline
+  displayName: 'Start pipeline (run build + publish)'
+  type: boolean
+  default: true
+
+- name: stopPipeline
+  displayName: 'Stop pipeline (skip build + publish)'
+  type: boolean
+  default: false
+
+variables:
+  tag: '$(Build.BuildId)'
+  imageName: 'deployment-portal-ui'
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - ${{ if and(eq(parameters.startPipeline, true), eq(parameters.stopPipeline, false)) }}:
+    - job: Build
+      displayName: Build
+      pool:
+        vmImage: ubuntu-latest
+      steps:
+      - task: Docker@2
+        displayName: Build an image
+        inputs:
+          command: build
+          dockerfile: '$(Build.SourcesDirectory)/deployment-ui/Dockerfile'
+          repository: '$(imageName)'
+          tags: |
+            $(tag)
+
+      - script: |
+          mkdir -p $(Build.ArtifactStagingDirectory)
+          docker save $(imageName):$(tag) -o $(Build.ArtifactStagingDirectory)/$(imageName)-$(tag).tar
+        displayName: Save image to tar
+
+      - task: PublishPipelineArtifact@1
+        displayName: Publish artifact
+        inputs:
+          targetPath: '$(Build.ArtifactStagingDirectory)'
+          artifact: 'deployment-ui-image'
+          publishLocation: 'pipeline'
