@@ -18,7 +18,7 @@ variables:
   azureSubscription: 'arm-connection'                   # still needs to be created - see below
   resourceGroup: 'test'
   apiAppName: 'deploy'
-  uiAppName: '<your-second-app-service-name>'           # still doesn't exist yet - see below
+  uiAppName: 'deply-ui'           # still doesn't exist yet - see below
   tag: '$(Build.BuildId)'
 
 stages:
