@@ -13,12 +13,12 @@ parameters:
       - production
 
 variables:
-  dockerRegistryServiceConnection: 'acr-connection'   # ACR service connection (create in Project Settings)
-  containerRegistry: 'Deployment.azurecr.io'
-  azureSubscription: 'arm-connection'                 # ARM service connection, reusing the deployment-portal SP
+  dockerRegistryServiceConnection: 'Deployment'        # matches your existing service connection name
+  containerRegistry: 'deployment.azurecr.io'            # your real ACR login server
+  azureSubscription: 'arm-connection'                   # still needs to be created - see below
   resourceGroup: 'test'
-  apiAppName: 'deploy'                                 # your existing App Service
-  uiAppName: 'deploy'          # create this one - name must be globally unique
+  apiAppName: 'deploy'
+  uiAppName: '<your-second-app-service-name>'           # still doesn't exist yet - see below
   tag: '$(Build.BuildId)'
 
 stages:
