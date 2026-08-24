@@ -1,0 +1,55 @@
+# Start/stop the "rc" deployment slot on the test3456 App Service.
+# Manual only - no CI trigger, so a normal push never touches this. Run it
+# from Azure DevOps: Pipelines -> this pipeline -> Run pipeline -> pick
+# Start or Stop from the "action" dropdown.
+
+trigger: none
+pr: none
+
+parameters:
+- name: action
+  displayName: 'Start or stop the rc slot?'
+  type: string
+  default: Stop
+  values:
+  - Start
+  - Stop
+
+variables:
+  azureSubscription: 'arm-connection'
+  webAppName: 'test3456'
+  resourceGroupName: 'test3456_group'
+  slotName: 'rc'
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: ${{ parameters.action }}RcSlot
+  displayName: '${{ parameters.action }} rc slot'
+  jobs:
+  - job: ${{ parameters.action }}Slot
+    displayName: '${{ parameters.action }} $(webAppName)/$(slotName)'
+    steps:
+
+    - ${{ if eq(parameters.action, 'Start') }}:
+      - task: AzureAppServiceManage@0
+        displayName: 'Start rc slot'
+        inputs:
+          azureSubscription: '$(azureSubscription)'
+          Action: 'Start Azure App Service'
+          WebAppName: '$(webAppName)'
+          ResourceGroupName: '$(resourceGroupName)'
+          SpecifySlotOrASE: true
+          Slot: '$(slotName)'
+
+    - ${{ if eq(parameters.action, 'Stop') }}:
+      - task: AzureAppServiceManage@0
+        displayName: 'Stop rc slot'
+        inputs:
+          azureSubscription: '$(azureSubscription)'
+          Action: 'Stop Azure App Service'
+          WebAppName: '$(webAppName)'
+          ResourceGroupName: '$(resourceGroupName)'
+          SpecifySlotOrASE: true
+          Slot: '$(slotName)'
