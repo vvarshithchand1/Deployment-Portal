@@ -12,7 +12,6 @@ GitHub REST API on your behalf.
 No database is required — all configuration is stored in a local JSON file.
 
 ----
-fge
 ## Run Pipeline
 
 [![Run Pipeline](https://img.shields.io/badge/Run%20Pipeline-GitHub%20Actions-2ea44f?style=for-the-badge&logo=github)](https://github.com/VarshithChand/yaml/actions/workflows/run-pipeline.yml)
