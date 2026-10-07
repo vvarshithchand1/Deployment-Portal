@@ -8,11 +8,10 @@ GitHub REST API on your behalf.
 - `src/DeploymentAPI/` — ASP.NET Core backend (GitHub API integration, auth, settings storage)
 - `src/AdminAPI/`, `src/PMSCoreAPI/`, `src/SecurityAPI/` — the sample services this portal deploys
 - `.github/workflows/` — the CI/CD pipelines the portal triggers
-BGF
 No database is required — all configuration is stored in a local JSON file.
 
 ----
-KNNBH
+
 ## Run Pipeline
 
 [![Run Pipeline](https://img.shields.io/badge/Run%20Pipeline-GitHub%20Actions-2ea44f?style=for-the-badge&logo=github)](https://github.com/VarshithChand/yaml/actions/workflows/run-pipeline.yml)
