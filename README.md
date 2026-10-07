@@ -8,7 +8,7 @@ GitHub REST API on your behalf.
 - `src/DeploymentAPI/` — ASP.NET Core backend (GitHub API integration, auth, settings storage)
 - `src/AdminAPI/`, `src/PMSCoreAPI/`, `src/SecurityAPI/` — the sample services this portal deploys
 - `.github/workflows/` — the CI/CD pipelines the portal triggers
-
+BGF
 No database is required — all configuration is stored in a local JSON file.
 
 ----
